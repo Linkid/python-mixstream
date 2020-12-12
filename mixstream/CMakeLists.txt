@@ -6,7 +6,7 @@ add_library(_MixStream MODULE ${_MixStream} MixStream.c vorbis.c soundtouch-c.cp
 target_include_directories(_MixStream
     INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}
     PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
-    PUBLIC ${GLIB2_INCLUDE_DIRS}
+    PRIVATE ${GLIB2_INCLUDE_DIRS}
     PRIVATE ${SDL_MIXER_INCLUDE_DIRS}
     PRIVATE ${SOUNDTOUCH_INCLUDE_DIRS}
 )
