@@ -41,4 +41,4 @@ jobs:
           python setup.py check
           python setup.py test
         env:
-          SDL_AUDIODRIVER=dummy  # handle alsa issues
+          SDL_AUDIODRIVER: dummy  # handle alsa issues
