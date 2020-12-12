@@ -72,6 +72,6 @@ esac
 
 # install python dependencies
 echo "[+] Install python dependencies"
-pip install cython scikit-build cmake ninja
+pip install cython "scikit-build!=0.11.1" cmake ninja
 
 echo "[+] All done"
