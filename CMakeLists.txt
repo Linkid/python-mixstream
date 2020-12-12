@@ -32,9 +32,9 @@ else()
     message(STATUS "Use pkgconfig")
 
     find_package(PkgConfig REQUIRED)
-    pkg_search_module(GLIB2 REQUIRED glib-2.0>=2.28 IMPORTED_TARGET)
-    pkg_search_module(SOUNDTOUCH REQUIRED soundtouch>=1.7.1 IMPORTED_TARGET)
-    pkg_search_module(VORBISFILE REQUIRED vorbisfile>=1.3.3 IMPORTED_TARGET)
+    pkg_search_module(GLIB2 REQUIRED glib-2.0 IMPORTED_TARGET)
+    pkg_search_module(SOUNDTOUCH REQUIRED soundtouch IMPORTED_TARGET)
+    pkg_search_module(VORBISFILE REQUIRED vorbisfile IMPORTED_TARGET)
     find_package(SDL_mixer REQUIRED)
 endif()
 
