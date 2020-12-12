@@ -11,7 +11,7 @@ target_include_directories(_MixStream
     PRIVATE ${SOUNDTOUCH_INCLUDE_DIRS}
 )
 target_link_libraries(_MixStream
-    ${GLIB2_LIBRARIES}
+    ${GLIB2_LINK_LIBRARIES}
     ${SDL_MIXER_LIBRARIES}
     ${VORBISFILE_LIBRARIES}
     ${SOUNDTOUCH_LIBRARIES}
