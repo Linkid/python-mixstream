@@ -37,5 +37,5 @@ setup(
     keywords='music vorbis sdl soundtouch',
     setup_requires=['cmake', 'pytest-runner'],
     test_suite="tests",
-    tests_require=["pytest"],
+    #tests_require=["pytest"],
 )
