@@ -14,7 +14,7 @@ target_include_directories(_MixStream
 )
 target_link_libraries(_MixStream
     ${GLIB2_LINK_LIBRARIES}
-    ${GTHREAD2_LIBRARIES}
+    ${GTHREAD2_LINK_LIBRARIES}
     ${SDL_MIXER_LIBRARIES}
     ${VORBISFILE_LIBRARIES}
     ${SOUNDTOUCH_LIBRARIES}
