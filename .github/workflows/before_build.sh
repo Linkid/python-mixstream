@@ -38,6 +38,7 @@ case ${operating_system} in
         echo "[*] osx"
         brew update --quiet > /dev/null
         brew install --quiet \
+            glib \
             portmidi \
             libvorbis \
             sdl_mixer \
