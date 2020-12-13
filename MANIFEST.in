@@ -4,7 +4,6 @@ include README.md
 
 recursive-include mixstream *.c
 recursive-include mixstream *.h
+recursive-include mixstream *.py
 recursive-include mixstream *.pyx
 recursive-include tests *.py
-
-prune mixstream/_MixStream.c
