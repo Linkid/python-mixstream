@@ -28,6 +28,13 @@ install(TARGETS _MixStream
 )
 
 # Windows: copy DLLs
-#if (WIN32)
-#    install()
-#endif()
+if (WIN32)
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/glib-2.dll))
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/gthread-2.dll)
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/vorbisfile.dll)
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/SoundTouchDll_x64.dll)
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/SoundTouchDll_x84.dll)
+    list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/SDL_mixer.dll)
+    install(FILES ${DEPENDENCIES_DLL}
+            DESTINATION ${CMAKE_INSTALL_PREFIX}/mixstream)
+endif()

@@ -64,6 +64,10 @@ case ${operating_system} in
             soundtouch
         echo "[*] integrate"
         vcpkg integrate install
+
+        echo "[*] download SDL_mixer"
+        wget https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.12-VC.zip
+        unzip SDL_mixer-devel-1.2.12-VC.zip
     ;;
 
     *)

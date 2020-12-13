@@ -17,17 +17,38 @@ project(mixstream)
 # manage dependencies
 #
 # set vars
-set(USE_VCPKG OFF CACHE BOOL "Use dependencies installed via vcpkg (not dependency package)")
-set(VCPKG_APPLOCAL_DEPS ${USE_VCPKG} BOOL)
+set(_VCPKG OFF CACHE BOOL "Use dependencies installed via vcpkg (not dependency package)")
+set(VCPKG_APPLOCAL_DEPS ${_VCPKG} BOOL)
 
 # find python deps
 find_package(Python REQUIRED)
 find_package(PythonExtensions REQUIRED)
 find_package(Cython REQUIRED)
 
-# get deps
-if(USE_VCPKG)
+# find system deps
+if(_VCPKG)
     message(STATUS "Use vcpkg")
+
+    # set vcpkg vars
+    set(VCPKG_CRT_LINKAGE dynamic)
+    set(VCPKG_LIBRARY_LINKAGE dynamic)
+
+    # find deps
+    ## glib
+    find_path(GLIB2_INCLUDE_DIRS NAMES glib.h)
+    find_library(GLIB2_LINK_LIBRARIES glib-2.0)
+    ## gthread
+    find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h)
+    find_library(GTHREAD2_LINK_LIBRARIES gthread-2.0)
+    ## soundtouch
+    find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h)
+    find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
+    ## vorbisfile
+    find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
+    find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
+    ## sdl_mixer
+    find_package(FindSDL_mixer)
+
 else()
     message(STATUS "Use pkgconfig")
 
