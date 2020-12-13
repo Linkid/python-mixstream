@@ -12,11 +12,17 @@ jobs:
   build_wheels:
     name: Build wheels on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
+    needs: vcpkg_export
     strategy:
       fail-fast: true
       matrix:
         #os: [ubuntu-latest, windows-latest, macos-latest]
         os: [windows-latest]
+        include:
+          - arch: x64
+            vcpkg_triplet: "x64-windows"
+          - arch: x86
+            vcpkg_triplet: "x86-windows"
 
     steps:
       - name: Checkout
@@ -35,6 +41,18 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install vcpython27 -f -y
+
+      - name: Download vcpkg export
+        uses: actions/download-artifact@v2
+        with:
+          name: vcpkg_${{ matrix.arch }}
+          path: C:/
+      - name: Unzip vcpkg export
+        run: |
+          unzip vcpkg_x*.zip
+          unzip vcpkg-export*.zip
+          rm -f *.zip
+          cp -ur vcpkg-export-* C:/vcpkg/
 
       - name: Build wheels
         if: runner.os == 'Windows'
