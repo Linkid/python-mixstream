@@ -57,6 +57,7 @@ case ${operating_system} in
         fi
 
         vcpkg install \
+            glib \
             libvorbis \
             portmidi \
             sdl1 \
