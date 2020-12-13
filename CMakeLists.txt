@@ -33,6 +33,7 @@ else()
 
     find_package(PkgConfig REQUIRED)
     pkg_search_module(GLIB2 REQUIRED glib-2.0 IMPORTED_TARGET)
+    pkg_search_module(GTHREAD2 REQUIRED gthread-2.0 IMPORTED_TARGET)
     pkg_search_module(SOUNDTOUCH REQUIRED soundtouch soundtouch-1.0 soundtouch-1.4 IMPORTED_TARGET)
     pkg_search_module(VORBISFILE REQUIRED vorbisfile IMPORTED_TARGET)
     find_package(SDL_mixer REQUIRED)
