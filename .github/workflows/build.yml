@@ -64,6 +64,48 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
+  vcpkg_export:
+    name: Build Windows dependencies
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            vcpkg_triplet: "x64-windows"
+          - arch: x86
+            vcpkg_triplet: "x86-windows"
+
+    steps:
+      - name: Run vcpkg
+        uses: lukka/run-vcpkg@v6
+        with:
+          vcpkgArguments: ${{ env.packages }}
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgGitCommitId: e9ff3cd5a04cd0e8122ff56e9873985ff71aa3ca  # 2020-11-01
+          vcpkgTriplet: ${{ matrix.vcpkg_triplet }}
+          appendedCacheKey: ${{ hashFiles(env.packages) }}
+        env:
+          packages: >
+            glib libvorbis portmidi sdl1 soundtouch
+
+      - name: Export vcpkg ports
+        run: |
+          ${{ github.workspace }}\vcpkg\vcpkg list
+          ${{ github.workspace }}\vcpkg\vcpkg install ${{ env.packages }}
+          ${{ github.workspace }}\vcpkg\vcpkg export --zip ${{ env.packages }}
+        env:
+          packages: >
+            glib libvorbis portmidi sdl1 soundtouch
+          VCPKG_TARGET_ARCHITECTURE: "${{ matrix.arch }}"
+          VCPKG_DEFAULT_TRIPLET: "${{ matrix.vcpkg_triplet }}"
+
+      - name: Upload vcpkg installed
+        uses: actions/upload-artifact@v2
+        with:
+          name: vcpkg_${{ matrix.arch }}
+          path: ${{ env.VCPKG_ROOT }}/vcpkg-export*
+
 
 #  build_sdist:
 #    name: Build source distribution
