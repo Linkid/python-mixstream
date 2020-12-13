@@ -16,7 +16,7 @@ target_link_libraries(_MixStream
     ${GLIB2_LINK_LIBRARIES}
     ${GTHREAD2_LINK_LIBRARIES}
     ${SDL_MIXER_LIBRARIES}
-    ${VORBISFILE_LIBRARIES}
+    ${VORBISFILE_LINK_LIBRARIES}
     ${SOUNDTOUCH_LIBRARIES}
 )
 python_extension_module(_MixStream)
