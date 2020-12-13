@@ -15,7 +15,7 @@ jobs:
     strategy:
       matrix:
         #os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [macos-latest]
 
     steps:
       - name: Checkout
@@ -39,7 +39,7 @@ jobs:
         run: |
           python -m cibuildwheel --output-dir wheelhouse
         env:
-          CIBW_BUILD: "cp3*"
+          CIBW_BUILD: "cp27*,cp39*"
           CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
           CIBW_BEFORE_TEST: "cp -r {project}/tests .."
           CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
