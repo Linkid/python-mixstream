@@ -7,3 +7,5 @@ recursive-include mixstream *.h
 recursive-include mixstream *.py
 recursive-include mixstream *.pyx
 recursive-include tests *.py
+recursive-include tests *.ogg
+recursive-include tests *.mid
