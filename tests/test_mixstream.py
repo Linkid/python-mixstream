@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
 import unittest
 
 from mixstream._MixStream import VorbisFileError
@@ -10,7 +11,9 @@ from mixstream._MixStream import VorbisFileMixStream
 class VorbisFileMixStreamTest(unittest.TestCase):
 
     def setUp(self):
-        self.filename = b"tests/guitar_drumrolls.ogg"
+        default_filename = "guitar_drumrolls.ogg"
+        self.test_directory = Path(__file__).parent
+        self.filename = bytes(self.test_directory / default_filename)
         self.channel = 5
         self.length = 227.97061224489795
 
@@ -20,7 +23,8 @@ class VorbisFileMixStreamTest(unittest.TestCase):
 
     def test_init_filetype_error(self):
         with self.assertRaises(VorbisFileError):
-            VorbisFileMixStream(b"tests/notes_drumrolls.mid")
+            other_filename = self.test_directory / "notes_drumrolls.mid"
+            VorbisFileMixStream(bytes(other_filename))
 
     def test_play(self):
         mixstream = VorbisFileMixStream(self.filename)
