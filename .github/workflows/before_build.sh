@@ -2,6 +2,7 @@
 # before build
 
 set -e
+set -x
 
 # get the operating system
 operating_system=$(echo "$1" | tr '[:upper:]' '[:lower:]')
@@ -37,6 +38,8 @@ case ${operating_system} in
 
     "windows"*)
         echo "[*] windows"
+        echo "- cibw_build: ${CIBW_BUILD}"
+        echo "- cibw_arch: ${CIBW_ARCH}"
 
         if [[ $( echo ${CIBW_BUILD} | grep win32 ) ]]
         then
@@ -45,19 +48,20 @@ case ${operating_system} in
             export VCPKG_DEFAULT_TRIPLET=x64-windows
         fi
 
+        echo "VCPKG_ROOT: .${VCPKG_ROOT}."
         ${VCPKG_ROOT}/vcpkg install \
             glib \
             libvorbis \
             portmidi \
-            sdl_mixer \
-            sound-touch --clean-after-buid
+            sdl1 \
+            soundtouch --clean-after-build
 
         echo "[*] integrate"
         ${VCPKG_ROOT}/vcpkg integrate install
 
-        echo "[*] download SDL_mixer"
-        wget https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.12-VC.zip
-        unzip SDL_mixer-devel-1.2.12-VC.zip
+        #echo "[*] download SDL_mixer"
+        #curl -LO https://www.libsdl.org/projects/SDL_mixer/release/SDL_mixer-devel-1.2.12-VC.zip
+        #unzip SDL_mixer-devel-1.2.12-VC.zip
     ;;
 
     *)

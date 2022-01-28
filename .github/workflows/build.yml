@@ -16,8 +16,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-          #os: [ubuntu-latest, macos-latest]
-          os: [macos-latest]
+        #os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
+        include:
+          - os: windows-latest
+            arch: x64
+            vcpkg_triplet: "x64-windows"
+          - os: windows-latest
+            arch: x86
+            vcpkg_triplet: "x86-windows"
 
     steps:
       - name: Checkout
@@ -30,8 +37,39 @@ jobs:
         run: |
           python -m pip install "cibuildwheel==2.3.1"
 
-      - name: Build wheels
+      - uses: ilammy/msvc-dev-cmd@v1
+        with:
+          arch: amd64
+      - name: Run vcpkg
+        if: runner.os == 'Windows'
+        uses: lukka/run-vcpkg@v10
+        with:
+          vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgGitCommitId: c9e786d81a890ef6b3932779925f11e696dc9541 #2022.01.01
+          appendedCacheKey: ${{ hashFiles(env.packages) }}
+        env:
+          VCPKG_TARGET_ARCHITECTURE: "${{ matrix.arch }}"
+          VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
+          packages: >
+            glib libvorbis portmidi sdl1 soundtouch
+      - name: Build wheels (windows)
+        if: runner.os == 'Windows'
         uses: pypa/cibuildwheel@v2.3.1
+        #shell: cmd
+        env:
+          CIBW_SKIP: "cp36* pp*"
+          CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
+          CIBW_BEFORE_TEST: "cp -r {project}/tests .."
+          CIBW_TEST_REQUIRES: pytest
+          CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
+          VCPKG_BUILD: 1
+          VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
+          VCPKG_TOOLCHAIN: "${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          #VCPKG_TOOLCHAIN: "C:/vcpkg/scripts/buildsystems/vcpkg.cmake"
+
+      - name: Build wheels (linux & macos)
+        uses: pypa/cibuildwheel@v2.3.1
+        if: runner.os != 'Windows'
         env:
           CIBW_SKIP: "cp36* pp* *i686 *musllinux*"
           CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
