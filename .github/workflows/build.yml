@@ -30,7 +30,7 @@ jobs:
           python -m pip install "cibuildwheel==2.3.1"
 
       - name: Build wheels
-        uses: pypa/cibuildwheel@v2.3.1
+        uses: pypa/cibuildwheel@2.5.0
         env:
           CIBW_SKIP: "cp36* pp* *i686 *musllinux*"
           CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
