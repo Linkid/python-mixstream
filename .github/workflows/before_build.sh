@@ -37,19 +37,19 @@ case ${operating_system} in
     ;;
     "windows"*)
         echo "[*] windows"
-        echo "- cibw_build: ${CIBW_BUILD}"
-        echo "- cibw_arch: ${CIBW_ARCH}"
+        #echo "- cibw_build: ${CIBW_BUILD}"
+        #echo "- cibw_arch: ${CIBW_ARCH}"
 
-        echo "VCPKG_ROOT: .${VCPKG_ROOT}."
-        ${VCPKG_ROOT}/vcpkg install \
-            glib \
-            libvorbis \
-            portmidi \
-            sdl2-mixer \
-            soundtouch --clean-after-build
+        #echo "VCPKG_ROOT: .${VCPKG_ROOT}."
+        #${VCPKG_ROOT}/vcpkg install \
+        #    glib \
+        #    libvorbis \
+        #    portmidi \
+        #    sdl2-mixer \
+        #    soundtouch --clean-after-build
 
-        echo "[*] integrate"
-        ${VCPKG_ROOT}/vcpkg integrate install
+        #echo "[*] integrate"
+        #${VCPKG_ROOT}/vcpkg integrate install
 
     ;;
     *)

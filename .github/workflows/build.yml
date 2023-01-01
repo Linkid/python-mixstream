@@ -48,7 +48,7 @@ jobs:
       - uses: ilammy/msvc-dev-cmd@v1
         if: runner.os == 'Windows'
 
-      - uses: lukka/get-cmake@latest
+      #- uses: lukka/get-cmake@latest
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
@@ -64,7 +64,7 @@ jobs:
         if: runner.os == 'Windows'
         env:
           CIBW_SKIP: "cp36* pp**"
-          #CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
+          CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
           CIBW_BEFORE_TEST: "cp -r {project}/tests .."
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
