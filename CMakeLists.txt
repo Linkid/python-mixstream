@@ -34,7 +34,7 @@ if (_VCPKG)
     # vorbisfile
     # sdl2_mixer
 
-if (WIN32 AND USE_WIN_DEP)
+elseif (WIN32 AND USE_WIN_DEP)
     message(STATUS "Use downloaded dependencies")
 
     set(DEPENDENCY_FOLDER "${PROJECT_SOURCE_DIR}/win_dep")

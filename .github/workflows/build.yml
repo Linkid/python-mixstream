@@ -25,7 +25,7 @@ jobs:
 
       # Linux & macOS
       - name: Build wheels (linux & macos)
-        uses: pypa/cibuildwheel@v2.11.2
+        uses: pypa/cibuildwheel@v2.11.4
         if: runner.os != 'Windows'
         env:
           CIBW_SKIP: "cp36* pp* *i686 *musllinux*"
