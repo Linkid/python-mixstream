@@ -1,13 +1,14 @@
 name: Build
 
-on:
-  push:
-    branches:
-      - master
-    tags:
-      - 'v*'
-    release:
-      types: [published]
+on: [push, pull_request]
+#on:
+#  push:
+#    branches:
+#      - master
+#    tags:
+#      - 'v*'
+#    release:
+#      types: [published]
 
 jobs:
   build_wheels:
@@ -16,7 +17,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        os: [ubuntu-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
       - name: Checkout
@@ -31,12 +32,41 @@ jobs:
 
       - name: Build wheels
         uses: pypa/cibuildwheel@v2.11.2
+        if: runner.os != 'Windows'
         env:
           CIBW_SKIP: "cp36* pp* *i686 *musllinux*"
           CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
           CIBW_BEFORE_TEST: "cp -r {project}/tests .."
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
+
+      # Windows (vcpkg)
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
+      - name: Restore artifacts, or setup vcpkg for building artifacts
+        uses: lukka/run-vcpkg@v10
+        if: runner.os == 'Windows'
+        id: runvcpkg
+        with:
+          #vcpkgJsonGlob: 'vcpkg.json'
+          #vcpkgDirectory: '${{ github.workspace }}/vcpkg'
+          vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
+        env:
+          packages: >
+            glib libvorbis portmidi sdl2-mixer soundtouch
+
+      - name: Build wheels (windows)
+        uses: pypa/cibuildwheel@v2.11.2
+        if: runner.os == 'Windows'
+        env:
+          CIBW_SKIP: "cp36* pp**"
+          #CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
+          CIBW_BEFORE_TEST: "cp -r {project}/tests .."
+          CIBW_TEST_REQUIRES: pytest
+          CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
+          VCPKG_BUILD: 1
+          VCPKG_TOOLCHAIN: "${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
 
       - uses: actions/upload-artifact@v3
         with:

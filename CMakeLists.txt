@@ -16,6 +16,7 @@ project(mixstream)
 # manage dependencies
 ## set vars
 set(USE_WIN_DEP OFF CACHE BOOL "Use dependencies from an external package")
+set(_VCPKG OFF CACHE BOOL "Use dependencies installed via vcpkg (not dependency package)")
 
 ## find python deps
 find_package(Python REQUIRED)
@@ -23,6 +24,16 @@ find_package(PythonExtensions REQUIRED)
 find_package(Cython REQUIRED)
 
 ## get deps
+if (_VCPKG)
+    message(STATUS "Use vcpkg")
+
+    # glib
+    #find_package(glib CONFIG REQUIRED)
+    # gthread
+    # soundtouch
+    # vorbisfile
+    # sdl2_mixer
+
 if (WIN32 AND USE_WIN_DEP)
     message(STATUS "Use downloaded dependencies")
 

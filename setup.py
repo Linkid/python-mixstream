@@ -21,6 +21,9 @@ except ImportError:
 build_cmake_args = list()
 if os.getenv("WIN_BUID"):
     build_cmake_args.append('-DUSE_WIN_DEP=ON')
+if os.getenv("VCPKG_BUILD"):
+    build_cmake_args.append("-D_VCPKG=ON")
+    build_cmake_args.append("-DCMAKE_TOOLCHAIN_FILE=" + os.getenv("VCPKG_TOOLCHAIN"))
 
 # setup
 setup(
