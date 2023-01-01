@@ -31,14 +31,12 @@ if (_VCPKG)
     message(STATUS "The dependency folder is: ${DEPENDENCY_FOLDER}")
 
     # glib
-    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATH_SUFFIXES "glib-2.0")
-    find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATHS "${DEPENDENCY_FOLDER}/lib/glib-2.0/include")
-    list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_0})
-    list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_1})
+    find_path(GLIB2_INCLUDE_DIRS NAMES glib.h PATH_SUFFIXES "glib-2.0")
+    #find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATHS "${DEPENDENCY_FOLDER}/lib/glib-2.0/include")
+    #list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_0})
+    #list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_1})
     find_library(GLIB2_LINK_LIBRARIES NAMES glib-2.0 PATHS "${DEPENDENCY_FOLDER}/lib")
-    message(STATUS "glib2 include dirs 0: ${GLIB2_INCLUDE_DIRS_0}")
-    message(STATUS "glib2 include dirs 1: ${GLIB2_INCLUDE_DIRS_1}")
-    message(STATUS "glib2 include dirs: ${GLIB2_INCLUDE_DIRS_0}")
+    message(STATUS "glib2 include dirs: ${GLIB2_INCLUDE_DIRS}")
 
     # gthread
     find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h)
