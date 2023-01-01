@@ -46,16 +46,13 @@ jobs:
           #vcpkgJsonGlob: 'vcpkg.json'
           #vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
-        env:
-          packages: >
-            glib libvorbis portmidi sdl2-mixer soundtouch
 
       - name: Build wheels (windows)
         uses: pypa/cibuildwheel@v2.11.2
         if: runner.os == 'Windows'
         env:
           CIBW_SKIP: "cp36* pp**"
-          CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
+          #CIBW_BEFORE_BUILD: "bash {package}/.github/workflows/before_build.sh ${{ matrix.os }}"
           CIBW_BEFORE_TEST: "cp -r {project}/tests .."
           CIBW_TEST_REQUIRES: pytest
           CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
