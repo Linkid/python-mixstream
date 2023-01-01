@@ -27,12 +27,34 @@ find_package(Cython REQUIRED)
 if (_VCPKG)
     message(STATUS "Use vcpkg")
 
+    set(DEPENDENCY_FOLDER "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_DEFAULT_TRIPLET}")
+    message(STATUS "The dependency folder is: ${DEPENDENCY_FOLDER}")
+
     # glib
-    #find_package(glib CONFIG REQUIRED)
+    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATH_SUFFIXES "glib-2.0"))
+    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glibconfig.h PATHS "${DEPENDENCY_FOLDER}/lib/glib-2.0/include")
+    list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_0})
+    list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_1})
+    find_library(GLIB2_LINK_LIBRARIES NAMES glib-2.0 PATHS "${DEPENDENCY_FOLDER}/lib")
+    message(STATUS "glib2 include dirs 0: ${GLIB2_INCLUDE_DIRS_0}")
+    message(STATUS "glib2 include dirs 1: ${GLIB2_INCLUDE_DIRS_1}")
+    message(STATUS "glib2 include dirs: ${GLIB2_INCLUDE_DIRS_0}")
+
     # gthread
+    find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h)
+    find_library(GTHREAD2_LINK_LIBRARIES gthread-2.0)
+
     # soundtouch
+    find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h)
+    find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
+
     # vorbisfile
+    #find_package(Vorbis CONFIG REQUIRED)
+    find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
+    find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
+
     # sdl2_mixer
+    find_package(SDL2_mixer CONFIG REQUIRED)
 
 elseif (WIN32 AND USE_WIN_DEP)
     message(STATUS "Use downloaded dependencies")
