@@ -18,6 +18,16 @@ jobs:
       fail-fast: true
       matrix:
         os: [windows-latest]
+        include:
+          - os: windows-latest
+            arch: x64
+            vcpkg_triplet: "x64-windows"
+          - os: windows-latest
+            arch: x86
+            vcpkg_triplet: "x86-windows"
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
 
     steps:
       - name: Checkout
@@ -37,6 +47,8 @@ jobs:
       # Windows (vcpkg)
       - uses: ilammy/msvc-dev-cmd@v1
         if: runner.os == 'Windows'
+
+      - uses: lukka/get-cmake@latest
 
       - name: Restore artifacts, or setup vcpkg for building artifacts
         uses: lukka/run-vcpkg@v10
