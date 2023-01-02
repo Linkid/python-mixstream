@@ -39,8 +39,8 @@ if (_VCPKG)
     message(STATUS "glib2 include dirs: ${GLIB2_INCLUDE_DIRS}")
 
     # gthread
-    find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h)
-    find_library(GTHREAD2_LINK_LIBRARIES gthread-2.0)
+    find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h PATH_SUFFIXES "glib-2.0")
+    find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 gthread)
 
     # soundtouch
     find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h)
