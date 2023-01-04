@@ -31,7 +31,7 @@ if (_VCPKG)
     message(STATUS "The dependency folder is: ${DEPENDENCY_FOLDER}")
 
     # glib
-    find_path(GLIB2_INCLUDE_DIRS NAMES glib.h PATH_SUFFIXES "glib-2.0")
+    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATH_SUFFIXES "glib-2.0")
     find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATH_SUFFIXES "glib-2.0")
     list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_0})
     list(APPEND ${GLIB2_INCLUDE_DIRS} ${GLIB2_INCLUDE_DIRS_1})
