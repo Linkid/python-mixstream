@@ -1,3 +1,5 @@
+message(STATUS "mixstream.cmake")
+
 # cythonize the pyx file
 add_cython_target(_MixStream _MixStream.pyx)
 
