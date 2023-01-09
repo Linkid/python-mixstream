@@ -70,6 +70,8 @@ jobs:
           CIBW_TEST_COMMAND: "SDL_AUDIODRIVER=dummy pytest {project}/../tests"
           VCPKG_BUILD: 1
           VCPKG_TOOLCHAIN: "${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+          VCPKG_ROOT: "${{ github.workspace }}/vcpkg"
+          VCPKG_DEFAULT_TRIPLET: "${{ env.VCPKG_DEFAULT_TRIPLET }}"
 
   #    - uses: actions/upload-artifact@v3
   #      with:
@@ -89,3 +91,40 @@ jobs:
   #      with:
   #        path: dist/*.tar.gz
   #        name: mixstream-sdist.tar.gz
+
+  vcpkg_export:
+    name: Build Windows dependencies
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: x64
+            vcpkg_triplet: "x64-windows"
+          - arch: x86
+            vcpkg_triplet: "x86-windows"
+
+    env:
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg
+
+    steps:
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
+      - name: Run vcpkg
+        uses: lukka/run-vcpkg@v10
+        id: runvcpkg
+        with:
+          vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
+          runVcpkgInstall: true
+
+      - name: Export vcpkg ports
+        run: |
+          ${{ github.workspace }}\vcpkg\vcpkg export --nuget --zip glib  # libvorbis portmidi sdl2-mixer soundtouch
+
+      - name: Upload vcpkg installed
+        uses: actions/upload-artifact@v3
+        with:
+          name: vcpkg_${{ matrix.arch }}
+          path: vcpkg-export*
