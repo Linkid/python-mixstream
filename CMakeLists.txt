@@ -45,8 +45,9 @@ if (_VCPKG)
     find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 gthread)
 
     # soundtouch
-    find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h PATH_SUFFIXES "soundtouch")
-    find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
+    find_package(SoundTouch CONFIG REQUIRED)
+    #find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h PATH_SUFFIXES "soundtouch")
+    #find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
 
     # vorbisfile
     find_package(Vorbis CONFIG REQUIRED)

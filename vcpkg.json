@@ -2,7 +2,11 @@
     "name": "mixstream",
     "version-string": "1.1.0",
     "dependencies": [
-        "glib"
+        "glib",
+        "libvorbis",
+        "portmidi",
+        "sdl2-mixer",
+        "soundtouch"
     ]
 }
 
