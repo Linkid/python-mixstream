@@ -44,18 +44,18 @@ if (_VCPKG)
     find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h PATH_SUFFIXES "glib-2.0")
     find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 gthread)
 
-    ## soundtouch
-    #find_package(SoundTouch CONFIG REQUIRED)
-    ##find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h)
-    ##find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
+    # soundtouch
+    find_package(SoundTouch CONFIG REQUIRED)
+    #find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h)
+    #find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
 
-    ## vorbisfile
-    #find_package(Vorbis CONFIG REQUIRED)
-    ##find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
-    ##find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
+    # vorbisfile
+    find_package(Vorbis CONFIG REQUIRED)
+    #find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
+    #find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
 
-    ## sdl2_mixer
-    #find_package(SDL2_mixer CONFIG REQUIRED)
+    # sdl2_mixer
+    find_package(SDL2_mixer CONFIG REQUIRED)
 
 elseif (WIN32 AND USE_WIN_DEP)
     message(STATUS "Use downloaded dependencies")
