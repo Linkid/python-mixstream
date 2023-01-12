@@ -104,10 +104,11 @@ jobs:
           - arch: x86
             vcpkg_triplet: "x86-windows"
 
+    env:
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
 
     steps:
       - uses: ilammy/msvc-dev-cmd@v1
-        if: runner.os == 'Windows'
 
       - name: Run vcpkg
         uses: lukka/run-vcpkg@v10
@@ -115,10 +116,10 @@ jobs:
         with:
           #vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
-          runVcpkgInstall: true
-        env:
-          VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
-          VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/installed
+          #runVcpkgInstall: true
+        #env:
+        #  VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+        #  VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/installed/
 
       - name: Prints output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
