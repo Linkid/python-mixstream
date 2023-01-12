@@ -50,9 +50,9 @@ if (_VCPKG)
     #find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
 
     # vorbisfile
-    find_package(Vorbis CONFIG REQUIRED)
-    #find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
-    #find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
+    #find_package(Vorbis CONFIG REQUIRED)
+    find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
+    find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
 
     # sdl2_mixer
     find_package(SDL2_mixer CONFIG REQUIRED)
