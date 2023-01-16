@@ -27,7 +27,7 @@ jobs:
             vcpkg_triplet: "x86-windows"
 
     env:
-      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
 
     steps:
       - name: Checkout
@@ -105,7 +105,7 @@ jobs:
             vcpkg_triplet: "x86-windows"
 
     env:
-      VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
 
     steps:
       - uses: ilammy/msvc-dev-cmd@v1
@@ -118,7 +118,7 @@ jobs:
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
           #runVcpkgInstall: true
         #env:
-        #  VCPKG_DEFAULT_TRIPLET: ${{ matrix.triplet }}
+        #  VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
         #  VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/installed/
 
       - name: Prints output of run-vcpkg's action.
@@ -126,7 +126,7 @@ jobs:
 
       - name: Export vcpkg ports
         run: |
-          ${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.triplet }}
+          ${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.vcpkg_triplet }}
           ${{ github.workspace }}\vcpkg\vcpkg export --nuget --zip glib  # libvorbis portmidi sdl2-mixer soundtouch
 
       - name: Upload vcpkg installed
