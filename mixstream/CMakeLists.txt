@@ -17,6 +17,7 @@ target_link_libraries(_MixStream
     ${GLIB2_LINK_LIBRARIES}
     ${GTHREAD2_LINK_LIBRARIES}         # for osx
     ${SDL2_MIXER_LIBRARIES}
+    SDL2_mixer::SDL2_mixer
     ${SOUNDTOUCH_LINK_LIBRARIES}
     ${VORBISFILE_LINK_LIBRARIES}
 )
