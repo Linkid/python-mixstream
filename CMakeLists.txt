@@ -56,7 +56,14 @@ if (_VCPKG)
     find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
 
     # sdl2_mixer
+    find_package(SDL2 CONFIG REQUIRED)
+    message(STATUS "SDL2LIBRARIES: ${SDL2LIBRARIES}")
+    message(STATUS "SDL2_LIBRARIES: ${SDL2_LIBRARIES}")
+    message(STATUS "SDL2_LINK_LIBRARIES: ${SDL2_LINK_LIBRARIES}")
     find_package(SDL2_mixer CONFIG REQUIRED)
+    message(STATUS "SDL2MIXER_LIBRARIES: ${SDL2MIXER_LIBRARIES}")
+    message(STATUS "SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES}")
+    message(STATUS "SDL2_MIXER_LINK_LIBRARIES: ${SDL2_MIXER_LINK_LIBRARIES}")
 
 elseif (WIN32 AND USE_WIN_DEP)
     message(STATUS "Use downloaded dependencies")

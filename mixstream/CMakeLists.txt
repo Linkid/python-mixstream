@@ -17,9 +17,13 @@ target_link_libraries(_MixStream
     ${GLIB2_LINK_LIBRARIES}
     ${GTHREAD2_LINK_LIBRARIES}         # for osx
     ${SDL2_MIXER_LIBRARIES}
-    SDL2_mixer::SDL2_mixer
+    ${SDL2MIXER_LIBRARIES}
+    ${SDL2_MIXER_LINK_LIBRARIES}
     ${SOUNDTOUCH_LINK_LIBRARIES}
     ${VORBISFILE_LINK_LIBRARIES}
+    #SDL2_mixer::SDL2_mixer
+    #SDL2::Main
+    #SDL2::Mixer
 )
 python_extension_module(_MixStream)
 
