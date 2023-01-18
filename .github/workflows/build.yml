@@ -117,6 +117,7 @@ jobs:
           #vcpkgDirectory: '${{ github.workspace }}/vcpkg'
           vcpkgGitCommitId: 6f7ffeb18f99796233b958aaaf14ec7bd4fb64b2 #2022.11.14
           #runVcpkgInstall: true
+          vcpkgJsonGlob: 'vcpkg.json'
         env:
           VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
           VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/
@@ -126,7 +127,7 @@ jobs:
 
       - name: Export vcpkg ports
         run: |
-          ${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.vcpkg_triplet }} libvorbis portmidi sdl2-mixer soundtouch
+          ${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.vcpkg_triplet }} glib libvorbis portmidi sdl2-mixer soundtouch
           ${{ github.workspace }}\vcpkg\vcpkg export --nuget --zip glib libvorbis portmidi sdl2-mixer soundtouch
 
       - name: Upload vcpkg installed

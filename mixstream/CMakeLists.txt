@@ -51,6 +51,7 @@ if (WIN32)
     list(APPEND DEPENDENCIES_DLL ${CMAKE_CURRENT_BINARY_DIR}/SDL2_mixer.dll)
     foreach(DEP IN LISTS ${DEPENDENCIES_DLL})
         if (EXISTS ${DEP})
+            message(STATUS "install dll: ${DEP}"
             install(FILES ${DEP}
                     DESTINATION ${CMAKE_INSTALL_PREFIX}/mixstream)
         else()
