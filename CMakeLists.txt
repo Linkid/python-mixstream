@@ -64,9 +64,9 @@ if (_VCPKG)
     message(STATUS "SDL2MIXER_LIBRARIES: ${SDL2MIXER_LIBRARIES}")
     message(STATUS "SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES}")
     message(STATUS "SDL2_MIXER_LINK_LIBRARIES: ${SDL2_MIXER_LINK_LIBRARIES}")
+    list(APPEND SDL2_MIXER_LIBRARIES ${SDL2_LIBRARIES})
     list(APPEND SDL2_MIXER_LIBRARIES
         $<IF:$<TARGET_EXISTS:SDL2_mixer::SDL2_mixer>,SDL2_mixer::SDL2_mixer,SDL2_mixer::SDL2_mixer-static>)
-    list(APPEND SDL2_MIXER_LIBRARIES SDL2::Main)
     message(STATUS "SDL2_MIXER_LIBRARIES: ${SDL2_MIXER_LIBRARIES}")
 
 elseif (WIN32 AND USE_WIN_DEP)
@@ -99,11 +99,10 @@ else()
     pkg_search_module(GLIB2 REQUIRED glib-2.0 IMPORTED_TARGET)
     pkg_search_module(GTHREAD2 REQUIRED gthread-2.0 IMPORTED_TARGET)
     pkg_search_module(SOUNDTOUCH REQUIRED soundtouch soundtouch-1.0 soundtouch-1.4 IMPORTED_TARGET)
-    pkg_search_module(VORBISFILE REQUIRED vorbisfile IMPORTED_TARGET)
+    pkg_search_module(VORBISFILE REQUIRED vorbisfile>=1.3.6 IMPORTED_TARGET)
     pkg_search_module(SDL2_MIXER REQUIRED SDL2_mixer IMPORTED_TARGET)
     #find_package(SDL_mixer REQUIRED)
 endif()
-
 
 # build the project
 add_subdirectory(mixstream)
