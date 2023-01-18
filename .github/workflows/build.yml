@@ -119,15 +119,15 @@ jobs:
           runVcpkgInstall: true
         env:
           VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkg_triplet }}
-          VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/installed/
+          VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg/
 
       - name: Prints output of run-vcpkg's action.
         run: echo "root='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_ROOT_OUT }}', triplet='${{ steps.runvcpkg.outputs.RUNVCPKG_VCPKG_DEFAULT_TRIPLET_OUT }}' "
 
       - name: Export vcpkg ports
         run: |
-          #${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.vcpkg_triplet }}
-          ${{ github.workspace }}\vcpkg\vcpkg export --nuget --zip glib  # libvorbis portmidi sdl2-mixer soundtouch
+          #${{ github.workspace }}\vcpkg\vcpkg install --triplet ${{ matrix.vcpkg_triplet }} libvorbis portmidi sdl2-mixer soundtouch
+          ${{ github.workspace }}\vcpkg\vcpkg export --nuget --zip glib libvorbis portmidi sdl2-mixer soundtouch
 
       - name: Upload vcpkg installed
         uses: actions/upload-artifact@v3
