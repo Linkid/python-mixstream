@@ -26,37 +26,37 @@ find_package(Cython REQUIRED)
 ## get deps
 if (_VCPKG)
     message(STATUS "Use vcpkg")
+    message("CMAKE_INSTALL_PREFIX is ${CMAKE_INSTALL_PREFIX}")
+    message("CMAKE_SIZEOF_VOID_P is ${CMAKE_SIZEOF_VOID_P}")
+    message("CMAKE_GENERATOR_PLATFORM is ${CMAKE_GENERATOR_PLATFORM}")
 
     set(DEPENDENCY_FOLDER "$ENV{VCPKG_ROOT}/installed/$ENV{VCPKG_DEFAULT_TRIPLET}")
     message(STATUS "The dependency folder is: ${DEPENDENCY_FOLDER}")
 
     # glib
-    #find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATH_SUFFIXES "glib-2.0")
-    #find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATH_SUFFIXES "lib/glib-2.0/include")
-    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATHS "${DEPENDENCY_FOLDER}/include/glib-2.0")
-    find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATHS "${DEPENDENCY_FOLDER}/lib/glib-2.0/include")
+    find_path(GLIB2_INCLUDE_DIRS_0 NAMES glib.h PATH_SUFFIXES "glib-2.0" REGISTRY_VIEW HOST)
+    find_path(GLIB2_INCLUDE_DIRS_1 NAMES glibconfig.h PATH_SUFFIXES "lib/glib-2.0/include" REGISTRY_VIEW HOST)
     list(APPEND GLIB2_INCLUDE_DIRS ${GLIB2_INCLUDE_DIRS_0})
     list(APPEND GLIB2_INCLUDE_DIRS ${GLIB2_INCLUDE_DIRS_1})
-    #find_library(GLIB2_LINK_LIBRARIES NAMES glib-2.0 PATH_SUFFIXES "lib")
-    find_library(GLIB2_LINK_LIBRARIES NAMES glib-2.0 PATHS "${DEPENDENCY_FOLDER}/lib")
+    find_library(GLIB2_LINK_LIBRARIES NAMES glib-2.0 PATH_SUFFIXES "lib" REGISTRY_VIEW HOST)
     message(STATUS "glib2 include dirs 0: ${GLIB2_INCLUDE_DIRS_0}")
     message(STATUS "glib2 include dirs 1: ${GLIB2_INCLUDE_DIRS_1}")
     message(STATUS "glib2 include dirs: ${GLIB2_INCLUDE_DIRS}")
 
     # gthread
     find_path(GTHREAD2_INCLUDE_DIRS NAMES glib/gthread.h PATH_SUFFIXES "$ENV{VCPKG_DEFAULT_TRIPLET}/include/glib-2.0")
-    find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 gthread)
+    find_library(GTHREAD2_LINK_LIBRARIES NAMES gthread-2.0 gthread REGISTRY_VIEW HOST)
 
     # soundtouch
     #find_package(SoundTouch CONFIG REQUIRED)
-    find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h PATH_SUFFIXES "soundtouch")
-    find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll)
+    find_path(SOUNDTOUCH_INCLUDE_DIRS NAMES SoundTouch.h SoundTouchDLL.h PATH_SUFFIXES "soundtouch" REGISTRY_VIEW HOST)
+    find_library(SOUNDTOUCH_LINK_LIBRARIES NAMES libsoundtouch soundtouch soundtouchdll_x64 soundtouchdll_x86 soundtouchdll REGISTRY_VIEW HOST)
     #D:/a/python-mixstream/python-mixstream/_skbuild/win-amd64-3.7/cmake-build/vcpkg_installed/x86-windows/debug/bin/SoundTouch.dll
 
     # vorbisfile
     #find_package(Vorbis CONFIG REQUIRED)
-    find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h)
-    find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile)
+    find_path(VORBISFILE_INCLUDE_DIRS NAMES vorbis/vorbisfile.h REGISTRY_VIEW HOST)
+    find_library(VORBISFILE_LINK_LIBRARIES NAMES vorbisfile REGISTRY_VIEW HOST)
 
     # sdl2_mixer
     find_package(SDL2 CONFIG REQUIRED)
